@@ -2,7 +2,7 @@ defmodule ChanDoThis.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", ChanDoThis.RoomChannel
+  channel "lists", ChanDoThis.ListChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
