@@ -23,3 +23,5 @@ import socket from "./socket"
 import List from "./views/list"
 
 List.init(socket)
+
+
