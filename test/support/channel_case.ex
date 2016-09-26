@@ -24,6 +24,7 @@ defmodule ChanDoThis.ChannelCase do
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
+      import ChanDoThis.TestHelpers.CounterHelper
 
 
       # The default endpoint for testing
