@@ -1,38 +1,38 @@
-import index_template from "../templates/list/index.hbs"
-import new_template from "../templates/list/new.hbs"
-import list_template from "../templates/list/list.hbs"
-import error_template from "../templates/error.hbs"
-Handlebars.registerPartial('listPartial', list_template)
+import indexTemplate from "../templates/list/index.hbs"
+import newTemplate from "../templates/list/new.hbs"
+import listTemplate from "../templates/list/list.hbs"
+import errorTemplate from "../templates/error.hbs"
+Handlebars.registerPartial('listPartial', listTemplate)
 
 let ListActions = {
-  index_list_push(channel){
+  indexListPush(channel){
     channel.push("index", {})
   },
 
-  index_list_receive(resp){
+  indexListReceive(resp){
     $('[data-list="list-index-container"]')
       .empty()
-      .prepend(index_template(resp))
+      .prepend(indexTemplate(resp))
   },
 
-  new_list(){
+  newList(){
     $('[data-list="new-list-container"]')
       .empty()
-      .append(new_template)
+      .append(newTemplate)
   },
 
-  create_list_push(channel){
+  createListPush(channel){
     let name = $('[data-list="new-list-name"]').val()
     channel.push("create", {name: name})
       .receive("error", error => {
         $(`[data-error="error-${error.attr}"]`).remove()
-        $('[data-list="new-list-container"]').append(error_template(error))
+        $('[data-list="new-list-container"]').append(errorTemplate(error))
       })
   },
 
-  create_list_receive(resp){
+  createListReceive(resp){
     $('[data-list="new-list-container"]').empty()
-    $('[data-list="list-index-container"]').prepend(list_template(resp))
+    $('[data-list="list-index-container"]').prepend(listTemplate(resp))
   }
 }
 

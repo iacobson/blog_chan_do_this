@@ -6,26 +6,26 @@ let List = {
     let channel = socket.channel('lists')
     channel.join()
       .receive('ok', resp => {
-        ListActions.index_list_push(channel)
+        ListActions.indexListPush(channel)
       })
       .receive('error', reason => {
         console.log('Error joining channel: ', reason)
       })
 
     channel.on('index', resp => {
-      ListActions.index_list_receive(resp)
+      ListActions.indexListReceive(resp)
     })
 
-    $('[data-behaviour="new-list"]').on('click', ListActions.new_list)
+    $('[data-behaviour="new-list"]').on('click', ListActions.newList)
 
     $(document).on('click', '[data-behaviour="create-list"]',
-      () => ListActions.create_list_push(channel))
+      () => ListActions.createListPush(channel))
 
     $(document).on('click', '[data-behaviour="cancel-create-list"]',
       () => $('[data-list="new-list-container"]').empty())
 
     channel.on('create', resp => {
-      ListActions.create_list_receive(resp)
+      ListActions.createListReceive(resp)
     })
 
 
