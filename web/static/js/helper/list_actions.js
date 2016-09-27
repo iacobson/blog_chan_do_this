@@ -1,10 +1,18 @@
+import index_template from "../templates/list/index.hbs"
 import new_template from "../templates/list/new.hbs"
 import list_template from "../templates/list/list.hbs"
 import error_template from "../templates/error.hbs"
+Handlebars.registerPartial('listPartial', list_template)
 
 let ListActions = {
-  index_lists(channel){
-    console.log("here will display the index!")
+  index_list_push(channel){
+    channel.push("index", {})
+  },
+
+  index_list_receive(resp){
+    $('[data-list="list-index-container"]')
+      .empty()
+      .prepend(index_template(resp))
   },
 
   new_list(){

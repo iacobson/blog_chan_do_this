@@ -11,11 +11,8 @@
             <button data-behaviour="new-list" type="button" class="btn btn-success btn-sm pull-right">ADD</button>
           </h2>
         </div>
-        <div class="panel-body" data-list="new-list-container">
-          <p>Here will add a new list with ok and cancel buttons below</p>
-        </div>
-        <ul class="list-group" data-list="list-index-container">
-        </ul>
+        <div class="panel-body" data-list="new-list-container"></div>
+        <ul class="list-group" data-list="list-index-container"></ul>
       </div>
     </div>
 

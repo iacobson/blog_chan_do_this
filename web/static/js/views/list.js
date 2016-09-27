@@ -1,16 +1,20 @@
-import ListActions from "../helper/list_actions"
+import ListActions from '../helper/list_actions'
 
 let List = {
   init(socket){
     socket.connect()
-    let channel = socket.channel("lists")
+    let channel = socket.channel('lists')
     channel.join()
-      .receive("ok", resp => {
-        ListActions.index_lists(channel)
+      .receive('ok', resp => {
+        ListActions.index_list_push(channel)
       })
-      .receive("error", reason => {
-        console.log("Error joining channel: ", reason)
+      .receive('error', reason => {
+        console.log('Error joining channel: ', reason)
       })
+
+    channel.on('index', resp => {
+      ListActions.index_list_receive(resp)
+    })
 
     $('[data-behaviour="new-list"]').on('click', ListActions.new_list)
 
@@ -20,7 +24,7 @@ let List = {
     $(document).on('click', '[data-behaviour="cancel-create-list"]',
       () => $('[data-list="new-list-container"]').empty())
 
-    channel.on("create", resp => {
+    channel.on('create', resp => {
       ListActions.create_list_receive(resp)
     })
 
