@@ -1,8 +1,20 @@
 defmodule ChanDoThis.ListChannelTest do
   use ChanDoThis.ChannelCase, asyinc: true
-  alias ChanDoThis.{List}
+  alias ChanDoThis.{List, ListFactory}
 
   setup [:join_channel]
+
+  describe "index list" do
+    test "broadcasts existing lists", %{socket: socket} do
+      ListFactory.insert(:list, name: "list1")
+      ListFactory.insert(:list, name: "list2")
+
+      ref = push(socket, "index", %{})
+
+      assert_reply ref, :ok, %{}
+      assert_broadcast "index", %{lists: [%{id: id, name: "list1"}]}
+    end
+  end
 
   describe "create list" do
     test "new list is persisted", %{socket: socket} do
