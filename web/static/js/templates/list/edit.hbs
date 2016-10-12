@@ -1,16 +1,16 @@
 <div class="form-horizontal">
   <div class="form-group">
-    <input type="text" class="form-control" placeholder="list name" data-list="new-list-name">
+    <input type="text" class="form-control" value="{{name}}" data-list="edit-list-name" data-list-name="{{name}}">
   </div>
   <div class="form-group">
     <div class="btn-group btn-group-justified" role="group">
       <div class="btn-group" role="group">
-        <button type="submit" class="btn btn-success btn-xs" data-behaviour="create-list">
-          CREATE
+        <button type="submit" class="btn btn-success btn-xs" data-behaviour="update-list">
+          UPDATE
         </button>
       </div>
       <div class="btn-group" role="group">
-        <button class="btn btn-danger btn-xs" data-behaviour="cancel-create-list">
+        <button class="btn btn-danger btn-xs" data-behaviour="cancel-update-list">
           CANCEL
         </button>
       </div>

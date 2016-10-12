@@ -28,6 +28,11 @@ let List = {
       ListActions.createListReceive(resp)
     })
 
+    $(document).on('click', '[data-behaviour="edit-list"]',
+      ListActions.editList)
+
+    $(document).on('click', '[data-behaviour="cancel-update-list"]',
+      ListActions.updateListCancel)
 
   }
 }
