@@ -1,7 +1,7 @@
 defmodule ChanDoThis.ListChannel do
   use Phoenix.Channel
   use ChanDoThis.Web, :channel
-  import ChanDoThis.Actions.ListOperations,
+  import ChanDoThis.Actions.ListActions,
     only: [create_list: 1, list_to_json: 1,
           get_all_lists: 0, lists_to_json: 1]
   import ChanDoThis.Actions.ChannelsErrors,
@@ -20,7 +20,6 @@ defmodule ChanDoThis.ListChannel do
         broadcast!(socket, "create", list_to_json(list))
         {:reply, :ok, socket}
       {:error, changeset} ->
-        IO.inspect parse_changeset_errors(changeset)
         {:reply, {:error, parse_changeset_errors(changeset)}, socket}
     end
   end

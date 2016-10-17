@@ -1,4 +1,4 @@
-defmodule ChanDoThis.Actions.ListOperations do
+defmodule ChanDoThis.Actions.ListActions do
   alias ChanDoThis.{Repo, List, ListView}
 
   def get_all_lists do
