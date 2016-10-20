@@ -12,7 +12,7 @@ defmodule ChanDoThis.ListChannelTest do
       ref = push(socket, "index", %{})
 
       assert_reply ref, :ok, %{}
-      assert_broadcast "index", %{lists: [%{id: id, name: "list1"}]}
+      assert_broadcast "index", %{lists: [%{id: _id, name: "list1"}]}
     end
   end
 
@@ -23,11 +23,23 @@ defmodule ChanDoThis.ListChannelTest do
 
       ref = push(socket, "create", valid_attrs)
 
-
       assert_reply ref, :ok, %{}
       list_id = Repo.get_by(List, name: "cool list").id
       assert_broadcast "create", %{id: ^list_id, name: "cool list"}
       assert records_count(List) == before_count + 1
+    end
+  end
+
+  describe "update list" do
+    test "list update is persisted", %{socket: socket} do
+      list = ListFactory.insert(:list, name: "cool list")
+      list_id = list.id
+      valid_attrs = %{list_id: list_id, name: "very cool list"}
+
+      ref = push(socket, "update", valid_attrs)
+
+      assert_reply ref, :ok, %{}
+      assert_broadcast "update", %{id: ^list_id, name: "very cool list"}
     end
   end
 

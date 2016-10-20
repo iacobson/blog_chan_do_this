@@ -42,8 +42,26 @@ let ListActions = {
     parent.empty().prepend(editTemplate({name: name}))
   },
 
+  updateListPush(event){
+    let channel = event.data.channel // http://api.jquery.com/on/
+    let parent = $(this).parents('[data-list="list-container"]')
+    let name = parent.find('[data-list="edit-list-name"]').val()
+    let list_id = parent.data('list-id')
+    channel.push("update", {name: name, list_id: list_id})
+      .receive("error", error => {
+        $(`[data-error="error-${error.attr}"]`).remove()
+        parent.append(errorTemplate(error))
+      })
+  },
+
+  updateListReceive(resp){
+    $(`[data-list-id="${resp.id}"]`)
+      .empty()
+      .prepend(listTemplate(resp))
+  },
+
   updateListCancel(){
-    let parent = $(this).parents('li')
+    let parent = $(this).parents('[data-list="list-container"]')
     let name = parent.find('[data-list="edit-list-name"]').data('list-name')
     parent.empty().prepend(listTemplate({name: name}))
   }

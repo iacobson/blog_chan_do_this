@@ -1,4 +1,4 @@
-defmodule ChanDoThis.Actions.ChannelsErrors do
+defmodule ChanDoThis.ChannelsErrors do
   import ChanDoThis.ErrorHelpers, only: [translate_error: 1]
   import Phoenix.Naming, only: [humanize: 1]
 

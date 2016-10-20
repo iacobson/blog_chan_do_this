@@ -1,13 +1,22 @@
-defmodule ChanDoThis.Actions.ListActions do
+defmodule ChanDoThis.ListActions do
+  import Ecto.Query, only: [order_by: 3]
   alias ChanDoThis.{Repo, List, ListView}
 
   def get_all_lists do
-    Repo.all(List)
+    List
+    |> order_by([list], desc: list.inserted_at)
+    |> Repo.all()
   end
 
   def create_list(params) do
     List.changeset(%List{}, params)
     |> Repo.insert()
+  end
+
+  def update_list(params) do
+    Repo.get(List, params["list_id"])
+    |> List.changeset(params)
+    |> Repo.update()
   end
 
   def list_to_json(list) do
