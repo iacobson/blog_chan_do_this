@@ -4,6 +4,8 @@ defmodule ChanDoThis.List do
   schema "lists" do
     field :name, :string
 
+    has_many :todos, ChanDoThis.ToDo
+
     timestamps
   end
 
