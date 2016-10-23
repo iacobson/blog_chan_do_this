@@ -43,6 +43,22 @@ defmodule ChanDoThis.ListChannelTest do
     end
   end
 
+  describe "delete list" do
+    test "list is deleted", %{socket: socket} do
+      list = ListFactory.insert(:list, name: "cool list")
+      list_id = list.id
+      ListFactory.insert(:list)
+      ListFactory.insert(:list)
+      before_count = records_count(List)
+
+      ref = push(socket, "delete", %{"list_id" => list_id})
+      assert_reply ref, :ok, %{}
+      assert_broadcast "delete", %{id: ^list_id, name: "cool list"}
+      assert records_count(List) == before_count - 1
+      refute Repo.get(List, list_id)
+    end
+  end
+
   defp join_channel(_context) do
     {:ok, socket} = connect(ChanDoThis.UserSocket, %{})
     {:ok, _, socket} = subscribe_and_join(socket, "lists")

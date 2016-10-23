@@ -19,8 +19,13 @@ defmodule ChanDoThis.ListActions do
     |> Repo.update()
   end
 
+  def delete_list(params) do
+    Repo.get(List, params["list_id"])
+    |> Repo.delete()
+  end
+
   def list_to_json(list) do
-    Phoenix.View.render(ListView, "list.json", %{list: list})
+    Phoenix.View.render_one(list, ListView, "list.json")
   end
 
   def lists_to_json(lists) do

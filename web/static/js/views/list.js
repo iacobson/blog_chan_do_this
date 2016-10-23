@@ -44,8 +44,14 @@ let List = {
 
     $(document).on('click', '[data-behaviour="cancel-update-list"]',
       ListActions.updateListCancel)
-  }
 
+    $(document).on('click', '[data-behaviour="delete-list"]',
+       {channel: channel}, ListActions.deleteListPush)
+
+    channel.on('delete', resp => {
+      ListActions.deleteListReceive(resp)
+    })
+  }
 }
 
 export default List

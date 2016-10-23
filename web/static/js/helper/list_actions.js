@@ -1,5 +1,6 @@
 import indexTemplate from "../templates/list/index.hbs"
 import newTemplate from "../templates/list/new.hbs"
+import newListTemplate from "../templates/list/new_list.hbs"
 import editTemplate from "../templates/list/edit.hbs"
 import listTemplate from "../templates/list/list.hbs"
 import errorTemplate from "../templates/error.hbs"
@@ -33,7 +34,7 @@ let ListActions = {
 
   createListReceive(resp){
     $('[data-list="new-list-container"]').empty()
-    $('[data-list="list-index-container"]').prepend(listTemplate(resp))
+    $('[data-list="list-index-container"]').prepend(newListTemplate(resp))
   },
 
   editList(){
@@ -64,6 +65,21 @@ let ListActions = {
     let parent = $(this).parents('[data-list="list-container"]')
     let name = parent.find('[data-list="edit-list-name"]').data('list-name')
     parent.empty().prepend(listTemplate({name: name}))
+  },
+
+  deleteListPush(event){
+    let channel = event.data.channel // http://api.jquery.com/on/
+    let list_id = $(this).parents('[data-list="list-container"]').data('list-id')
+    channel.push("delete", {list_id: list_id})
+      .receive("error", error => {
+        $(`[data-error="error-${error.attr}"]`).remove()
+        parent.append(errorTemplate(error))
+      })
+  },
+
+  deleteListReceive(resp){
+    $(`[data-list-id="${resp.id}"]`)
+      .remove()
   }
 }
 

@@ -32,4 +32,13 @@ defmodule ChanDoThis.ListChannel do
     end
   end
 
+  def handle_in("delete", params, socket) do
+    case delete_list(params) do
+      {:ok, list} ->
+        broadcast!(socket, "delete", list_to_json(list))
+        {:reply, :ok, socket}
+      {:error, changeset} ->
+        {:reply, {:error, parse_changeset_errors(changeset)}, socket}
+    end
+  end
 end
