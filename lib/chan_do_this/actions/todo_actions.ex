@@ -13,5 +13,16 @@ defmodule ChanDoThis.TodoActions do
     Phoenix.View.render_many(todos, TodoView, "todo.json")
   end
 
+  def todo_to_json(todo) do
+    Phoenix.View.render_one(todo, TodoView, "todo.json")
+  end
+
+  def create_todo(list, params) do
+    list
+    |> Ecto.build_assoc(:todos)
+    |> Todo.changeset(params)
+    |> Repo.insert()
+  end
+
 
 end

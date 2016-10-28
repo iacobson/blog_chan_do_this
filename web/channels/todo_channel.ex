@@ -19,4 +19,15 @@ defmodule ChanDoThis.TodoChannel do
     {:reply, :ok, socket}
   end
 
+  def handle_in("create", params, socket) do
+    list = list_by_id(socket.assigns.list_id)
+    case create_todo(list, params) do
+      {:ok, todo} ->
+        broadcast!(socket, "create", todo_to_json(todo))
+        {:reply, :ok, socket}
+      {:error, changeset} ->
+        {:reply, {:error, parse_changeset_errors(changeset)}, socket}
+    end
+  end
+
 end

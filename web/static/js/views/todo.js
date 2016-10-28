@@ -16,6 +16,20 @@ let Todo = {
       TodoActions.indexTodoReceive(resp)
     })
 
+    $(document).on('click', '[data-behaviour="new-todo"]',
+      TodoActions.newTodo)
+
+    $(document).on('click', '[data-behaviour="create-todo"]',
+      () => TodoActions.createTodoPush(channel))
+
+    $(document).on('click', '[data-behaviour="cancel-create-todo"]',
+      () => $('[data-todo="new-todo-container"]').empty())
+
+    channel.on('create', resp => {
+      TodoActions.createTodoReceive(resp)
+    })
+
+
   },
 
   // if todos channels are open, will listen to the 'index' action

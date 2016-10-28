@@ -13,7 +13,7 @@ defmodule ChanDoThis.Todo do
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:name, :complete, :list_id])
-    |> validate_required([:name, :complete, :list_id])
+    |> validate_required([:name, :list_id])
   end
 
 end

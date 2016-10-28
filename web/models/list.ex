@@ -4,7 +4,7 @@ defmodule ChanDoThis.List do
   schema "lists" do
     field :name, :string
 
-    has_many :todos, ChanDoThis.Todo
+    has_many :todos, ChanDoThis.Todo, on_delete: :delete_all
 
     timestamps
   end
