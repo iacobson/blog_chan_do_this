@@ -18,22 +18,7 @@
 
     <div class="col-md-1"></div>
 
-    <div class="col-md-5">
-      <div class="panel panel-info">
-        <div class="panel-heading clearfix">
-          <h2 class="panel-title">
-            TO DO
-            <button type="button" class="btn btn-success btn-sm pull-right">ADD</button>
-          </h2>
-        </div>
-        <ul class="list-group">
-          <li class="list-group-item">Cras justo odio</li>
-          <li class="list-group-item">Dapibus ac facilisis in</li>
-          <li class="list-group-item">Morbi leo risus</li>
-          <li class="list-group-item">Porta ac consectetur ac</li>
-          <li class="list-group-item">Vestibulum at eros</li>
-        </ul>
-      </div>
+    <div class="col-md-5" data-todo="todo-container">
     </div>
 
     <div class="col-md-1"></div>

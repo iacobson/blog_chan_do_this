@@ -3,6 +3,7 @@ defmodule ChanDoThis.UserSocket do
 
   ## Channels
   channel "lists", ChanDoThis.ListChannel
+  channel "todos_for_list_id:*", ChanDoThis.TodoChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
