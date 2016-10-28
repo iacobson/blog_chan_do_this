@@ -30,4 +30,14 @@ defmodule ChanDoThis.TodoChannel do
     end
   end
 
+  def handle_in("update", params, socket) do
+    list = list_by_id(socket.assigns.list_id)
+    case update_todo(list, params) do
+      {:ok, todo} ->
+        broadcast!(socket, "update", todo_to_json(todo))
+        {:reply, :ok, socket}
+      {:error, changeset} ->
+        {:reply, {:error, parse_changeset_errors(changeset)}, socket}
+    end
+  end
 end

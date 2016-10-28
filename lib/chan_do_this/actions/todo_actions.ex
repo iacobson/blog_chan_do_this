@@ -24,5 +24,12 @@ defmodule ChanDoThis.TodoActions do
     |> Repo.insert()
   end
 
+  def update_todo(list, params) do
+    Ecto.assoc(list, :todos)
+    |> Repo.get(params["todo_id"])
+    |> Todo.changeset(params)
+    |> Repo.update()
+  end
+
 
 end

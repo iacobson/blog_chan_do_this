@@ -29,6 +29,21 @@ let Todo = {
       TodoActions.createTodoReceive(resp)
     })
 
+    $(document).on('click', '[data-behaviour="edit-todo"]',
+      TodoActions.editTodo)
+
+    $(document).on('click', '[data-behaviour="update-todo"]',
+       {channel: channel}, TodoActions.updateTodoPush)
+
+    $(document).on('click', '[data-behaviour="todo-done"]',
+       {channel: channel}, TodoActions.updateTodoStatusPush)
+
+    channel.on('update', resp => {
+      TodoActions.updateTodoReceive(resp)
+    })
+
+    $(document).on('click', '[data-behaviour="cancel-update-todo"]',
+      TodoActions.updateTodoCancel)
 
   },
 
