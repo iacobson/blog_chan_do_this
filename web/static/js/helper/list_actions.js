@@ -95,6 +95,8 @@ let ListActions = {
   deleteListReceive(resp){
     $(`[data-list-id="${resp.id}"]`)
       .remove()
+    $(`[data-todos-list-id="${resp.id}"]`)
+      .remove()
   }
 }
 
