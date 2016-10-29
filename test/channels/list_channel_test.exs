@@ -1,6 +1,6 @@
 defmodule ChanDoThis.ListChannelTest do
   use ChanDoThis.ChannelCase, asyinc: true
-  alias ChanDoThis.{List, ListFactory}
+  alias ChanDoThis.{List, ListFactory, Todo, TodoFactory}
 
   setup [:join_channel]
 
@@ -59,6 +59,20 @@ defmodule ChanDoThis.ListChannelTest do
       assert_broadcast "delete", %{id: ^list_id, name: "cool list"}
       assert records_count(List) == before_count - 1
       refute Repo.get(List, list_id)
+    end
+
+    test "list todos are also deleted", %{socket: socket} do
+      list = ListFactory.insert(:list, name: "cool list")
+      list_id = list.id
+      TodoFactory.insert(:todo, list: list)
+      TodoFactory.insert(:todo, list: list)
+      list_todos = Todo |> Ecto.Query.where(list_id: ^list_id)
+
+      assert records_count(list_todos) == 2
+      ref = push(socket, "delete", %{"list_id" => list_id})
+
+      assert_reply ref, :ok, %{}
+      assert records_count(list_todos) == 0
     end
   end
 
