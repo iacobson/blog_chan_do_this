@@ -31,5 +31,10 @@ defmodule ChanDoThis.TodoActions do
     |> Repo.update()
   end
 
+  def delete_todo(list, params) do
+    Ecto.assoc(list, :todos)
+    |> Repo.get(params["todo_id"])
+    |> Repo.delete()
+  end
 
 end

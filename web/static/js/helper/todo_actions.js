@@ -85,6 +85,21 @@ let TodoActions = {
     parent.empty().prepend(todoTemplate({name: name}))
   },
 
+  // DELTE
+  deleteTodoPush(event){
+    let channel = event.data.channel
+    let todo_id = $(this).parents('[data-todo="todo-container"]').data('todo-id')
+    channel.push("delete", {todo_id: todo_id})
+      .receive("error", error => {
+        $(`[data-error="error-${error.attr}"]`).remove()
+        parent.append(errorTemplate(error))
+      })
+  },
+
+  deleteTodoReceive(resp){
+    $(`[data-todo-id="${resp.id}"]`)
+      .remove()
+  }
 }
 
 export default TodoActions

@@ -45,6 +45,13 @@ let Todo = {
     $(document).on('click', '[data-behaviour="cancel-update-todo"]',
       TodoActions.updateTodoCancel)
 
+    $(document).on('click', '[data-behaviour="delete-todo"]',
+       {channel: channel}, TodoActions.deleteTodoPush)
+
+    channel.on('delete', resp => {
+      TodoActions.deleteTodoReceive(resp)
+    })
+
   },
 
   // if todos channels are open, will listen to the 'index' action

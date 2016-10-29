@@ -40,4 +40,15 @@ defmodule ChanDoThis.TodoChannel do
         {:reply, {:error, parse_changeset_errors(changeset)}, socket}
     end
   end
+
+  def handle_in("delete", params, socket) do
+    list = list_by_id(socket.assigns.list_id)
+    case delete_todo(list, params) do
+      {:ok, todo} ->
+        broadcast!(socket, "delete", todo_to_json(todo))
+        {:reply, :ok, socket}
+      {:error, changeset} ->
+        {:reply, {:error, parse_changeset_errors(changeset)}, socket}
+    end
+  end
 end
