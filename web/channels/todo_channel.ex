@@ -19,33 +19,25 @@ defmodule ChanDoThis.TodoChannel do
     {:reply, :ok, socket}
   end
 
-  def handle_in("create", params, socket) do
+  def handle_in(topic = "create", params, socket) do
     list = list_by_id(socket.assigns.list_id)
-    case create_todo(list, params) do
-      {:ok, todo} ->
-        broadcast!(socket, "create", todo_to_json(todo))
-        {:reply, :ok, socket}
-      {:error, changeset} ->
-        {:reply, {:error, parse_changeset_errors(changeset)}, socket}
-    end
+    handle_action(topic, create_todo(list, params), socket)
   end
 
-  def handle_in("update", params, socket) do
+  def handle_in(topic = "update", params, socket) do
     list = list_by_id(socket.assigns.list_id)
-    case update_todo(list, params) do
-      {:ok, todo} ->
-        broadcast!(socket, "update", todo_to_json(todo))
-        {:reply, :ok, socket}
-      {:error, changeset} ->
-        {:reply, {:error, parse_changeset_errors(changeset)}, socket}
-    end
+    handle_action(topic, update_todo(list, params), socket)
   end
 
-  def handle_in("delete", params, socket) do
+  def handle_in(topic = "delete", params, socket) do
     list = list_by_id(socket.assigns.list_id)
-    case delete_todo(list, params) do
+    handle_action(topic, delete_todo(list, params), socket)
+  end
+  
+  defp handle_action(topic, action, socket) do
+    case action do
       {:ok, todo} ->
-        broadcast!(socket, "delete", todo_to_json(todo))
+        broadcast!(socket, topic, todo_to_json(todo))
         {:reply, :ok, socket}
       {:error, changeset} ->
         {:reply, {:error, parse_changeset_errors(changeset)}, socket}
