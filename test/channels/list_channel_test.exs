@@ -6,13 +6,15 @@ defmodule ChanDoThis.ListChannelTest do
 
   describe "index list" do
     test "broadcasts existing lists", %{socket: socket} do
-      ListFactory.insert(:list, name: "list1")
-      ListFactory.insert(:list, name: "list2")
+      list1 = ListFactory.insert(:list, name: "list1")
+      list2= ListFactory.insert(:list, name: "list2")
+      list1_id = list1.id
+      list2_id = list2.id
 
       ref = push(socket, "index", %{})
 
       assert_reply ref, :ok, %{}
-      assert_broadcast "index", %{lists: [%{id: _id, name: "list1"}]}
+      assert_broadcast "index", %{lists: [%{id: ^list1_id, name: "list1"}, %{id: ^list2_id, name: "list2"}]}
     end
   end
 
@@ -52,6 +54,7 @@ defmodule ChanDoThis.ListChannelTest do
       before_count = records_count(List)
 
       ref = push(socket, "delete", %{"list_id" => list_id})
+
       assert_reply ref, :ok, %{}
       assert_broadcast "delete", %{id: ^list_id, name: "cool list"}
       assert records_count(List) == before_count - 1
