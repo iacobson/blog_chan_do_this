@@ -51,6 +51,9 @@ let List = {
     channel.on('delete', resp => {
       ListActions.deleteListReceive(resp)
     })
+
+    $(document).on('click', '[data-behaviour="open-todos"]',
+      {socket: socket}, ListActions.showList)
   }
 }
 

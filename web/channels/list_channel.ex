@@ -12,30 +12,22 @@ defmodule ChanDoThis.ListChannel do
     {:reply, :ok, socket}
   end
 
-  def handle_in("create", params, socket) do
-    case create_list(params) do
-      {:ok, list} ->
-        broadcast!(socket, "create", list_to_json(list))
-        {:reply, :ok, socket}
-      {:error, changeset} ->
-        {:reply, {:error, parse_changeset_errors(changeset)}, socket}
-    end
+  def handle_in(topic = "create", params, socket) do
+    handle_action(topic, create_list(params), socket)
   end
 
-  def handle_in("update", params, socket) do
-    case update_list(params) do
-      {:ok, list} ->
-        broadcast!(socket, "update", list_to_json(list))
-        {:reply, :ok, socket}
-      {:error, changeset} ->
-        {:reply, {:error, parse_changeset_errors(changeset)}, socket}
-    end
+  def handle_in(topic = "update", params, socket) do
+    handle_action(topic, update_list(params), socket)
   end
 
-  def handle_in("delete", params, socket) do
-    case delete_list(params) do
+  def handle_in(topic = "delete", params, socket) do
+    handle_action(topic, delete_list(params), socket)
+  end
+
+  defp handle_action(topic, action, socket) do
+    case action do
       {:ok, list} ->
-        broadcast!(socket, "delete", list_to_json(list))
+        broadcast!(socket, topic, list_to_json(list))
         {:reply, :ok, socket}
       {:error, changeset} ->
         {:reply, {:error, parse_changeset_errors(changeset)}, socket}

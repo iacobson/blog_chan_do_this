@@ -1,3 +1,4 @@
+import Todo from '../views/todo'
 import indexTemplate from "../templates/list/index.hbs"
 import newTemplate from "../templates/list/new.hbs"
 import newListTemplate from "../templates/list/new_list.hbs"
@@ -7,6 +8,8 @@ import errorTemplate from "../templates/error.hbs"
 Handlebars.registerPartial('listPartial', listTemplate)
 
 let ListActions = {
+
+  // INDEX
   indexListPush(channel){
     channel.push("index", {})
   },
@@ -17,12 +20,14 @@ let ListActions = {
       .prepend(indexTemplate(resp))
   },
 
+  // NEW
   newList(){
     $('[data-list="new-list-container"]')
       .empty()
       .append(newTemplate)
   },
 
+  // CREATE
   createListPush(channel){
     let name = $('[data-list="new-list-name"]').val()
     channel.push("create", {name: name})
@@ -37,12 +42,21 @@ let ListActions = {
     $('[data-list="list-index-container"]').prepend(newListTemplate(resp))
   },
 
+  // SHOW
+  showList(event){
+    let socket = event.data.socket
+    let list_id = $(this).parents('[data-list="list-container"]').data('list-id')
+    Todo.init(socket, list_id)
+  },
+
+  // EDIT
   editList(){
     let parent = $(this).parents('li')
     let name = parent.find('[data-list="name"]').data('list-name')
     parent.empty().prepend(editTemplate({name: name}))
   },
 
+  // UPDATE
   updateListPush(event){
     let channel = event.data.channel // http://api.jquery.com/on/
     let parent = $(this).parents('[data-list="list-container"]')
@@ -67,6 +81,7 @@ let ListActions = {
     parent.empty().prepend(listTemplate({name: name}))
   },
 
+  // DELETE
   deleteListPush(event){
     let channel = event.data.channel // http://api.jquery.com/on/
     let list_id = $(this).parents('[data-list="list-container"]').data('list-id')
@@ -79,6 +94,8 @@ let ListActions = {
 
   deleteListReceive(resp){
     $(`[data-list-id="${resp.id}"]`)
+      .remove()
+    $(`[data-todos-list-id="${resp.id}"]`)
       .remove()
   }
 }

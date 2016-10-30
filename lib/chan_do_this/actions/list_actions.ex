@@ -32,4 +32,8 @@ defmodule ChanDoThis.ListActions do
     Phoenix.View.render_many(lists, ListView, "list.json")
   end
 
+  def list_by_id(list_id) do
+    Repo.get(List, list_id)
+  end
+
 end

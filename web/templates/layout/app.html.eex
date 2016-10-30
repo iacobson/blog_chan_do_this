@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Hello ChanDoThis!</title>
+    <title>ChanDoThis</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
@@ -16,10 +16,17 @@
       <header class="header">
         <nav role="navigation">
           <ul class="nav nav-pills pull-right">
-            <li><a href="http://www.phoenixframework.org/docs">Get Started</a></li>
+            <li><a href="https://github.com/iacobson/chan_do_this"><b>Github Code</b></a></li>
           </ul>
         </nav>
-        <span class="logo"></span>
+        <span class="pull-left">
+          <h1><b> <span style="color:coral">Chan</span> Do This </b></h1>
+          <p>a <i>"controlerless"</i> test application using Phoenix <span style="color:coral">Channels</span> for live updates</p>
+        </span>
+        <span class="pull-left" style="color:coral">powered by:</span>
+        <a href="http://www.phoenixframework.org/docs" target="blank">
+          <span class="logo"></span>
+        </a>
       </header>
 
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
