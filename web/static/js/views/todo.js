@@ -1,4 +1,4 @@
-import TodoActions from '../helper/todo_actions'
+import TodoActions from '../actions/todo_actions'
 
 let Todo = {
   init(socket, list_id){

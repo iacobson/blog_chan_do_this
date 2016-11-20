@@ -1,4 +1,4 @@
-import ListActions from '../helper/list_actions'
+import ListActions from '../actions/list_actions'
 
 let List = {
   init(socket){
