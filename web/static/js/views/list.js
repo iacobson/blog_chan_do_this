@@ -1,4 +1,4 @@
-import ListActions from '../helper/list_actions'
+import ListActions from '../actions/list_actions'
 
 let List = {
   init(socket){
@@ -31,10 +31,6 @@ let List = {
     $(document).on('click', '[data-behaviour="edit-list"]',
       ListActions.editList)
 
-    // TODO: any better way to pass both the click scope
-      // and also pass the channel, such as:
-      // () => ListActions.updateListPush(channel, list_id)
-      // channel and the list_id are in DIFFERENT SCOPES
     $(document).on('click', '[data-behaviour="update-list"]',
        {channel: channel}, ListActions.updateListPush)
 
