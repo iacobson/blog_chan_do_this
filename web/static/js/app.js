@@ -24,4 +24,18 @@ import List from "./views/list"
 
 List.init(socket)
 
+import Vue from "vue"
+import ChanDoThis from "../components/chan_do_this.vue"
+
+// Create the main component
+Vue.component('chan-do-this', ChanDoThis)
+
+// Create the top-level view model
+new Vue({
+  el: "#app",
+  render(createElement) {
+    return createElement(ChanDoThis, {})
+  }
+})
+
 
