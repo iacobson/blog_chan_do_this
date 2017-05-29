@@ -25,24 +25,11 @@
 
 <script>
   import Lists from "./lists/lists"
-  import socket from "../js/socket"
 
 
   export default {
-    created() {
-      this.connectSocket()
-    },
-
     components: {
       "lists": Lists
-    },
-
-    methods: {
-      connectSocket() {
-        socket.connect
-
-        this.$store.commit("addSocket", socket)
-      }
     }
   }
 

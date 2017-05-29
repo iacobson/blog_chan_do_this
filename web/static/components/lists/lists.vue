@@ -18,7 +18,7 @@
           <div class="form-group">
             <div class="btn-group btn-group-justified" role="group">
               <div class="btn-group" role="group">
-                <button type="submit" class="btn btn-success btn-xs">
+                <button type="submit" class="btn btn-success btn-xs" v-on:click="createList">
                   CREATE
                 </button>
               </div>
@@ -42,26 +42,17 @@
 
 <script>
   import ListsIndex from "./lists_index"
-  import ListsForm from "./lists_form"
 
   export default {
+    components: {
+      "lists-index": ListsIndex,
+    },
 
     data() {
       return {
         showNewListForm: false,
         newListName: "",
-        channel: null
-
       }
-    },
-
-    mounted() {
-      this.connectListChannel()
-    },
-
-    components: {
-      "lists-index": ListsIndex,
-      "lists-form": ListsForm,
     },
 
     methods: {
@@ -72,21 +63,9 @@
         this.showNewListForm = false
         this.newListName = ""
       },
-      connectListChannel() {
-        this.channel = this.$store.state.socket.channel("lists")
-        this.channel.join()
-          .receive('ok', resp => {
-            this.channel.push("index", {})
-          })
-          .receive('error', reason => {
-            console.log('Error joining channel: ', reason)
-          })
-        this.handleChannelResponse()
-      },
-      handleChannelResponse() {
-        this.channel.on('index', resp => {
-          this.$store.commit("addLists", resp.lists)
-        })
+      createList() {
+        this.$store.state.listChannel.push("create", {name: this.newListName})
+        this.hideNewList()
       }
     }
   }

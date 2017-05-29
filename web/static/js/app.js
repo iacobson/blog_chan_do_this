@@ -12,7 +12,6 @@
 // If you no longer want to use a dependency, remember
 // to also remove its path from "config.paths.watched".
 import "phoenix_html"
-import socket from "./socket"
 
 // Import local files
 //
@@ -27,6 +26,7 @@ import socket from "./socket"
 import Vue from "vue"
 import ChanDoThis from "../components/chan_do_this.vue"
 import store from "./store"
+import socket from "./socket"
 
 // Create the main component
 Vue.component('chan-do-this', ChanDoThis)
@@ -35,6 +35,9 @@ Vue.component('chan-do-this', ChanDoThis)
 new Vue({
   el: "#app",
   store,
+  created() {
+    this.$store.commit("addSocket", socket)
+  },
   render(createElement) {
     return createElement(ChanDoThis, {})
   }
